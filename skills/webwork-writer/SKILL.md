@@ -40,7 +40,7 @@ Use this skill to author or adjust PG/PGML problems using the WeBWorK MCP render
 - Prefer local `PGrandom` seeded with `problemSeed` for deterministic randomization; avoid `SRAND` unless you want to reset the global RNG; sort hash keys before random selection.
 - Avoid MathJax color macros; use HTML spans and CSS for color.
 - Always render with `webwork_render_problem` to visually confirm layout and checkbox behavior before reporting results.
-- After rendering with `webwork_render_problem`, always create an artifact containing the rendered HTML so the user can preview the problem visually.
+- After rendering with `webwork_render_problem`, always create an HTML artifact (type: `text/html`) that displays the rendered problem in the browser. Take the `renderedHTML` from the render response and put it directly into the artifact as a complete HTML page — do NOT show the raw HTML as a code block. The user should see the problem as a student would see it, with MathJax rendering and input fields.
 
 ## Reference Files
 
