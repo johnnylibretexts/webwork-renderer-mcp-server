@@ -14,18 +14,29 @@ import { handleListMacros } from '../../src/tools/list-macros.js';
 
 const successResult = {
   renderedHTML: '<p>Hello</p>',
-  answers: { AnSwEr0001: { correct_value: '42', type: 'Real' } },
+  answers: {
+    AnSwEr0001: {
+      correct_value: '42',
+      correct_ans: '4+38',
+      type: 'Value (Real)',
+      score: 0,
+      ans_message: '',
+      error_message: '',
+      student_ans: '',
+      preview_text_string: '',
+    },
+  },
+  answerOrder: ['AnSwEr0001'],
   errors: [],
   warnings: [],
   flags: {},
-  raw: {
-    answers: { AnSwEr0001: { correct_value: '42', type: 'Real', score: 1 } },
-  },
+  raw: {},
 };
 
 const errorResult = {
   renderedHTML: '',
   answers: {},
+  answerOrder: [],
   errors: ['Perl syntax error at line 5: missing semicolon'],
   warnings: [],
   flags: {},

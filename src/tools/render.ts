@@ -27,8 +27,11 @@ export async function handleRenderProblem(args: {
 
     if (Object.keys(result.answers).length > 0) {
       sections.push(`### Answer Blanks`);
-      for (const [name, info] of Object.entries(result.answers)) {
-        sections.push(`- **${name}**: correct answer = \`${info.correct_value}\` (type: ${info.type})`);
+      for (const name of result.answerOrder) {
+        const info = result.answers[name];
+        if (info) {
+          sections.push(`- **${name}**: correct value = \`${info.correct_value}\`, expression = \`${info.correct_ans}\` (type: ${info.type})`);
+        }
       }
     }
 

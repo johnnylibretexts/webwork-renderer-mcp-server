@@ -15,12 +15,21 @@ export interface AnswerResult {
   preview: string;
 }
 
+export interface AnswerInfo {
+  correct_value: string;
+  correct_ans: string;
+  type: string;
+  score: number;
+  ans_message: string;
+  error_message: string;
+  student_ans: string;
+  preview_text_string: string;
+}
+
 export interface RenderResult {
   renderedHTML: string;
-  answers: Record<string, {
-    correct_value: string;
-    type: string;
-  }>;
+  answers: Record<string, AnswerInfo>;
+  answerOrder: string[];
   errors: string[];
   warnings: string[];
   flags: Record<string, unknown>;
@@ -99,15 +108,30 @@ export async function renderProblem(pgCode: string, options: RenderOptions = {})
     const errors: string[] = [];
     const warnings: string[] = [];
 
-    // Extract errors from various possible fields
-    const rawErrors = (data.errors as string) || (data.problem_result as Record<string, unknown>)?.errors as string || '';
+    // Extract errors from problem_result
+    const problemResult = (data.problem_result as Record<string, unknown>) || {};
+    const rawErrors = String(problemResult.errors || '');
     if (rawErrors) {
       errors.push(...rawErrors.split('\n').filter(Boolean).map(transformPerlError));
     }
 
-    const rawWarnings = (data.warnings as string) || '';
-    if (rawWarnings) {
-      warnings.push(...rawWarnings.split('\n').filter(Boolean));
+    // Extract warnings from debug fields
+    const debug = (data.debug as Record<string, unknown>) || {};
+    const pgWarn = debug.pg_warn;
+    if (Array.isArray(pgWarn)) {
+      warnings.push(...pgWarn.filter(Boolean).map(String));
+    } else if (typeof pgWarn === 'string' && pgWarn) {
+      warnings.push(...pgWarn.split('\n').filter(Boolean));
+    }
+    const perlWarn = debug.perl_warn;
+    if (typeof perlWarn === 'string' && perlWarn) {
+      errors.push(...perlWarn.split('\n').filter(Boolean).map(transformPerlError));
+    }
+
+    // Check error_flag in flags
+    const flags = (data.flags as Record<string, unknown>) || {};
+    if (flags.error_flag && errors.length === 0) {
+      errors.push('Problem flagged an error (error_flag set). Check PG code for issues.');
     }
 
     // Extract answers
@@ -115,17 +139,26 @@ export async function renderProblem(pgCode: string, options: RenderOptions = {})
     const answerData = (data.answers as Record<string, Record<string, unknown>>) || {};
     for (const [name, info] of Object.entries(answerData)) {
       answers[name] = {
-        correct_value: String(info.correct_value || info.correct_ans || ''),
-        type: String(info.type || info.ans_name || 'unknown'),
+        correct_value: String(info.correct_value ?? ''),
+        correct_ans: String(info.correct_ans ?? ''),
+        type: String(info.type ?? 'unknown'),
+        score: Number(info.score ?? 0),
+        ans_message: String(info.ans_message ?? ''),
+        error_message: String(info.error_message ?? ''),
+        student_ans: String(info.student_ans ?? ''),
+        preview_text_string: String(info.preview_text_string ?? ''),
       };
     }
 
+    const answerOrder = (flags.ANSWER_ENTRY_ORDER as string[]) || Object.keys(answers);
+
     return {
-      renderedHTML: String(data.renderedHTML || data.problem_rendered_html || data.text || ''),
+      renderedHTML: String(data.renderedHTML || ''),
       answers,
+      answerOrder,
       errors,
       warnings,
-      flags: (data.flags as Record<string, unknown>) || {},
+      flags,
       raw: data,
     };
   } catch (err) {

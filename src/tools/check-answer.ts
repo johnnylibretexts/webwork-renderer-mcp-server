@@ -33,22 +33,20 @@ export async function handleCheckAnswer(args: {
       sections.push(`### Errors\n${result.errors.map((e) => `- ${e}`).join('\n')}`);
     }
 
-    // Parse answer results from the raw response
-    const answerResults = (result.raw.answers as Record<string, Record<string, unknown>>) || {};
     const entries: string[] = [];
 
-    for (const [name, info] of Object.entries(answerResults)) {
-      const score = Number(info.score ?? 0);
-      const correct = score >= 1;
-      const submitted = String(args.answers[name] ?? '(not provided)');
-      const expected = String(info.correct_value || info.correct_ans || '');
-      const message = String(info.ans_message || info.error_message || '');
-      const preview = String(info.preview || info.student_ans || submitted);
+    for (const name of result.answerOrder) {
+      const info = result.answers[name];
+      if (!info) continue;
+      const correct = info.score >= 1;
+      const submitted = args.answers[name] ?? '(not provided)';
+      const message = info.ans_message || info.error_message;
+      const preview = info.preview_text_string || info.student_ans || submitted;
 
       entries.push(
-        `- **${name}**: ${correct ? 'CORRECT' : 'INCORRECT'} (score: ${score})\n` +
+        `- **${name}**: ${correct ? 'CORRECT' : 'INCORRECT'} (score: ${info.score})\n` +
         `  - Submitted: \`${submitted}\`\n` +
-        `  - Expected: \`${expected}\`\n` +
+        `  - Expected: \`${info.correct_value}\` (expression: \`${info.correct_ans}\`)\n` +
         `  - Preview: \`${preview}\`` +
         (message ? `\n  - Message: ${message}` : ''),
       );
