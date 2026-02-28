@@ -238,6 +238,15 @@ Common denominator is 12: 9/12 + 2/12 = 11/12.
 
 ---
 
+## Acknowledgments
+
+This project is built on top of the work of **[Neil R. Voss](https://github.com/vosslab)** (Associate Professor of Biology, Roosevelt University):
+
+- **[webwork-pg-renderer](https://github.com/vosslab/webwork-pg-renderer)** — The WeBWorK PG rendering engine that powers this MCP server. This project would not exist without it.
+- **[vosslab-skills](https://github.com/vosslab/vosslab-skills)** — The `webwork-writer` Claude skill and its extensive reference documentation on PG/PGML authoring, common pitfalls, and renderer API usage informed the design of this server's tools and error handling.
+
+The WeBWorK PG system itself is developed by the [openwebwork](https://github.com/openwebwork) community.
+
 ## License
 
-MIT
+This project is licensed under the **GNU General Public License v3.0** (GPLv3), consistent with the upstream [webwork-pg-renderer](https://github.com/vosslab/webwork-pg-renderer) project. See [LICENSE](LICENSE) for details.
