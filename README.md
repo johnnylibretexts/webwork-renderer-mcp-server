@@ -39,8 +39,7 @@ Once you have the server running (see Self-Hosting below), connect your AI tool 
 
 ```bash
 claude mcp add --transport http webwork-renderer \
-  https://your-domain.example.com/mcp \
-  --header "Authorization: Bearer YOUR_API_KEY"
+  https://your-domain.example.com/mcp
 ```
 
 ### Claude Desktop
@@ -57,14 +56,9 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
       "args": [
         "mcp-remote",
         "https://your-domain.example.com/mcp",
-        "--header",
-        "Authorization:${WEBWORK_AUTH}",
         "--transport",
         "http-only"
-      ],
-      "env": {
-        "WEBWORK_AUTH": "Bearer YOUR_API_KEY"
-      }
+      ]
     }
   }
 }
@@ -84,14 +78,9 @@ Edit `~/.cursor/mcp.json`:
       "args": [
         "mcp-remote",
         "https://your-domain.example.com/mcp",
-        "--header",
-        "Authorization:${WEBWORK_AUTH}",
         "--transport",
         "http-only"
-      ],
-      "env": {
-        "WEBWORK_AUTH": "Bearer YOUR_API_KEY"
-      }
+      ]
     }
   }
 }
@@ -118,14 +107,7 @@ Create a `.env` file:
 ```env
 PORT=3001
 RENDERER_URL=http://localhost:3000
-API_KEYS=wwmcp_your_key_here
 NODE_ENV=development
-```
-
-Generate an API key:
-
-```bash
-node -e "console.log('wwmcp_' + require('crypto').randomBytes(16).toString('hex'))"
 ```
 
 ### Run the renderer

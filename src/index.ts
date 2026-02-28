@@ -2,7 +2,6 @@ import 'dotenv/config';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { createMcpExpressApp } from '@modelcontextprotocol/sdk/server/express.js';
-import { authMiddleware } from './auth.js';
 import { PORT } from './constants.js';
 import { checkRendererHealth } from './renderer-client.js';
 import { handleRenderProblem } from './tools/render.js';
@@ -73,7 +72,7 @@ const host = process.env.NODE_ENV === 'production' ? '127.0.0.1' : '0.0.0.0';
 const allowedHosts = process.env.ALLOWED_HOSTS?.split(',').map(h => h.trim()).filter(Boolean);
 const app = createMcpExpressApp({ host, allowedHosts });
 
-// Health check endpoint (no auth required)
+// Health check endpoint
 app.get('/health', async (_req, res) => {
   const rendererUp = await checkRendererHealth();
   res.status(rendererUp ? 200 : 503).json({
@@ -82,9 +81,6 @@ app.get('/health', async (_req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
-
-// Auth middleware for MCP routes
-app.use('/mcp', authMiddleware);
 
 // MCP Streamable HTTP endpoint — stateless mode (new transport per request)
 app.post('/mcp', async (req, res) => {
