@@ -43,7 +43,7 @@ Use this skill to author or adjust PG/PGML problems using the WeBWorK MCP render
 - After rendering and verifying answers, always create an interactive HTML artifact (type: `text/html`). Do NOT paste raw renderer HTML — build a polished standalone page. The artifact must include:
   - MathJax loaded from CDN (`https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js`) with `tex-chtml` (not `tex-svg`) for clean rendering.
   - A styled header bar (dark background) with "WeBWorK Problem Preview" title and the seed number as a badge.
-  - The problem statement with rendered LaTeX and input fields pre-filled with the correct answers.
+  - The problem statement with rendered LaTeX and input fields pre-filled with the correct answers. Display equations and their answer inputs should be grouped together inside a styled card (light background, rounded corners, padding) so they feel visually contained — not floating separately.
   - Working "Submit Answers" button that checks inputs against the correct answers client-side, showing green correct/red incorrect badges per answer blank.
   - "Show Correct Answers" button that reveals the expected answers in an info box.
   - "Show/Hide Solution" toggle button that expands/collapses the solution text (if the problem has a SOLUTION section).
