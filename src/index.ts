@@ -70,7 +70,8 @@ function createServer(): McpServer {
 }
 
 const host = process.env.NODE_ENV === 'production' ? '127.0.0.1' : '0.0.0.0';
-const app = createMcpExpressApp({ host });
+const allowedHosts = process.env.ALLOWED_HOSTS?.split(',').map(h => h.trim()).filter(Boolean);
+const app = createMcpExpressApp({ host, allowedHosts });
 
 // Health check endpoint (no auth required)
 app.get('/health', async (_req, res) => {
