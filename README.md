@@ -31,22 +31,15 @@ Claude Desktop / Claude Code / Cursor
 
 The MCP server is a stateless Streamable HTTP endpoint. Each request gets its own MCP transport — no sessions to manage.
 
-## Hosted Instance
-
-A public instance is running at:
-
-- **MCP endpoint**: `https://webwork.johnnyrobot.ai/mcp`
-- **Health check**: `https://webwork.johnnyrobot.ai/health`
-
-Authentication is via Bearer token. Contact the maintainer for an API key.
-
 ## Client Setup
+
+Once you have the server running (see Self-Hosting below), connect your AI tool to it.
 
 ### Claude Code
 
 ```bash
 claude mcp add --transport http webwork-renderer \
-  https://webwork.johnnyrobot.ai/mcp \
+  https://your-domain.example.com/mcp \
   --header "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -63,7 +56,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://webwork.johnnyrobot.ai/mcp",
+        "https://your-domain.example.com/mcp",
         "--header",
         "Authorization:${WEBWORK_AUTH}",
         "--transport",
@@ -90,7 +83,7 @@ Edit `~/.cursor/mcp.json`:
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://webwork.johnnyrobot.ai/mcp",
+        "https://your-domain.example.com/mcp",
         "--header",
         "Authorization:${WEBWORK_AUTH}",
         "--transport",
