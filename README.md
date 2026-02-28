@@ -90,7 +90,7 @@ Edit `~/.cursor/mcp.json`:
 
 For the best experience, pair this MCP server with the **webwork-writer** skill from [vosslab-skills](https://github.com/vosslab/vosslab-skills). The MCP server gives Claude the *tools* to render and validate problems — the skill gives Claude the *knowledge* of PG/PGML authoring best practices, common pitfalls, and problem structure conventions.
 
-This is a Claude Code plugin (not supported in Claude Desktop).
+### Claude Code
 
 ```bash
 claude plugin marketplace add https://github.com/vosslab/vosslab-skills
@@ -98,6 +98,12 @@ claude plugin install vosslab-skills
 ```
 
 Then invoke it with `/vosslab-skills:webwork-writer`.
+
+### Claude Desktop
+
+1. Clone the repo: `git clone https://github.com/vosslab/vosslab-skills.git`
+2. ZIP the skill folder: `cd vosslab-skills/skills && zip -r webwork-writer.zip webwork-writer/`
+3. In Claude Desktop, go to **Customize > Skills**, click **+**, and upload `webwork-writer.zip`
 
 ## Self-Hosting
 
