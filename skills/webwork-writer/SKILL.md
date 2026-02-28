@@ -49,6 +49,7 @@ Use this skill to author or adjust PG/PGML problems using the WeBWorK MCP render
   - "Show/Hide Solution" toggle button that expands/collapses the solution text (if the problem has a SOLUTION section).
   - Answer metadata footer showing answer IDs, correct values, types, and context.
   - Professional styling: card-based layout, clean typography, responsive design.
+- Always also create a second artifact with the final `.pg` source code (type: `application/code`, language: `perl`, file extension `.pg`). This is the file the user will upload to LibreTexts ADAPT. Name it descriptively (e.g., `fraction_addition.pg`). Both artifacts — the interactive HTML preview and the .pg file — must always be produced.
 
 ## Reference Files
 
