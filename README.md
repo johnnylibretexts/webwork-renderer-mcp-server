@@ -88,9 +88,20 @@ Edit `~/.cursor/mcp.json`:
 
 ## Recommended: WeBWorK Writer Skill
 
-For the best experience, pair this MCP server with the **webwork-writer** skill from [vosslab-skills](https://github.com/vosslab/vosslab-skills). The MCP server gives Claude the *tools* to render and validate problems — the skill gives Claude the *knowledge* of PG/PGML authoring best practices, common pitfalls, and problem structure conventions.
+For the best experience, pair this MCP server with the **webwork-writer** skill. The MCP server gives Claude the *tools* to render and validate problems — the skill gives Claude the *knowledge* of PG/PGML authoring best practices, common pitfalls, and problem structure conventions.
+
+### Claude Desktop
+
+This repo includes an MCP-adapted version of the skill that uses the MCP tools directly (no local renderer needed):
+
+1. Download [`skills/webwork-writer.zip`](skills/webwork-writer.zip) from this repo
+2. In Claude Desktop, go to **Customize > Skills**, click **+**, and upload the ZIP
+
+This is a modified version adapted for MCP tool usage. Original skill by [Neil R. Voss](https://github.com/vosslab) ([vosslab-skills](https://github.com/vosslab/vosslab-skills)).
 
 ### Claude Code
+
+For Claude Code, use the upstream skill plugin which includes additional tooling:
 
 ```bash
 claude plugin marketplace add https://github.com/vosslab/vosslab-skills
@@ -98,12 +109,6 @@ claude plugin install vosslab-skills
 ```
 
 Then invoke it with `/vosslab-skills:webwork-writer`.
-
-### Claude Desktop
-
-1. Clone the repo: `git clone https://github.com/vosslab/vosslab-skills.git`
-2. ZIP the skill folder: `cd vosslab-skills/skills && zip -r webwork-writer.zip webwork-writer/`
-3. In Claude Desktop, go to **Customize > Skills**, click **+**, and upload `webwork-writer.zip`
 
 ## Self-Hosting
 
