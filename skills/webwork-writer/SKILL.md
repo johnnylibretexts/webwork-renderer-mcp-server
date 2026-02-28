@@ -40,7 +40,15 @@ Use this skill to author or adjust PG/PGML problems using the WeBWorK MCP render
 - Prefer local `PGrandom` seeded with `problemSeed` for deterministic randomization; avoid `SRAND` unless you want to reset the global RNG; sort hash keys before random selection.
 - Avoid MathJax color macros; use HTML spans and CSS for color.
 - Always render with `webwork_render_problem` to visually confirm layout and checkbox behavior before reporting results.
-- After rendering with `webwork_render_problem`, always create an HTML artifact (type: `text/html`) that displays the rendered problem in the browser. Take the `renderedHTML` from the render response and put it directly into the artifact as a complete HTML page — do NOT show the raw HTML as a code block. The user should see the problem as a student would see it, with MathJax rendering and input fields.
+- After rendering and verifying answers, always create an interactive HTML artifact (type: `text/html`). Do NOT paste raw renderer HTML — build a polished standalone page. The artifact must include:
+  - MathJax loaded from CDN (`https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.js`) with `tex-chtml` (not `tex-svg`) for clean rendering.
+  - A styled header bar (dark background) with "WeBWorK Problem Preview" title and the seed number as a badge.
+  - The problem statement with rendered LaTeX and input fields pre-filled with the correct answers.
+  - Working "Submit Answers" button that checks inputs against the correct answers client-side, showing green correct/red incorrect badges per answer blank.
+  - "Show Correct Answers" button that reveals the expected answers in an info box.
+  - "Show/Hide Solution" toggle button that expands/collapses the solution text (if the problem has a SOLUTION section).
+  - Answer metadata footer showing answer IDs, correct values, types, and context.
+  - Professional styling: card-based layout, clean typography, responsive design.
 
 ## Reference Files
 
