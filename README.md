@@ -244,7 +244,7 @@ This project is built on top of the work of **[Neil R. Voss](https://github.com/
 - **[webwork-pg-renderer](https://github.com/vosslab/webwork-pg-renderer)** — The WeBWorK PG rendering engine that powers this MCP server. This project would not exist without it.
 - **[vosslab-skills](https://github.com/vosslab/vosslab-skills)** — The `webwork-writer` Claude skill and its extensive reference documentation on PG/PGML authoring, common pitfalls, and renderer API usage informed the design of this server's tools and error handling.
 
-The WeBWorK PG system itself is developed by the [openwebwork](https://github.com/openwebwork) community.
+The WeBWorK PG system itself is developed by the [openwebwork](https://github.com/openwebwork) community. The original [WeBWorK2](https://github.com/openwebwork/webwork2) open-source homework platform has been serving students and instructors since the mid-1990s.
 
 ## License
 
